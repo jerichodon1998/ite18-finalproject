@@ -20,7 +20,7 @@ function MapList() {
 			onSnapshot(queryData, (snapshot) => {
 				const list = snapshot.docs.map((doc) => {
 					const id = doc.id;
-					const date = moment(doc.data().date.toDate());
+					const date = moment(doc.data().date?.toDate());
 					const todos = doc.data().todos;
 					const userId = doc.data().userId;
 					const list = new TodoListModel(date, todos, userId, id);
