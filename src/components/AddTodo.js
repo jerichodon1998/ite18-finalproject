@@ -54,6 +54,7 @@ function AddTodo({ data }) {
 									onChange={(e) => setTitle(e.target.value)}
 									type="text"
 									placeholder="Enter Title"
+									autoFocus
 									required
 								/>
 							</Form.Group>

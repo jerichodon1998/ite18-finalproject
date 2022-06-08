@@ -1,15 +1,15 @@
-// import { doc, getDoc } from "firebase/firestore";
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import { db } from "../firebaseConfig";
 import { TodoModel } from "../models/TodoModel";
-// import { db } from "../firebaseConfig";
+import Delete from "@mui/icons-material/Delete";
 import AddTodo from "./AddTodo";
+import Todo from "./Todo";
+import { ProgressBar } from "react-bootstrap";
 
 function TodoListCard({ data }) {
-	// todos, userUid
 	const { date, id } = data;
 	const [todos, setTodos] = useState([]);
 	const currentDate = moment();
@@ -20,7 +20,34 @@ function TodoListCard({ data }) {
 		} else if (moment(date._d).isBefore(currentDate._d, "day", "month", "year")) {
 			return "#606266";
 		}
-		return "green";
+		return "#F1E6B8";
+	};
+	const onDeleteList = () => {
+		todos.forEach((todo) => {
+			deleteDoc(doc(db, "todo", todo.id));
+		});
+		deleteDoc(doc(db, "todo_list", id));
+	};
+
+	const progressPercentage = () => {
+		var total = 0;
+		if (todos?.length !== 0) {
+			todos?.forEach((todo) => {
+				if (todo.done) {
+					total += 1;
+				}
+			});
+			const percentage = ((total / parseInt(todos?.length || 0)) * 100).toFixed(2);
+			return (
+				<ProgressBar
+					variant="warning"
+					style={{ borderRadius: "25px", height: "2rem", marginTop: ".5rem" }}
+					animated
+					now={percentage}
+					label={`${percentage?.toString()} %`}
+				/>
+			);
+		}
 	};
 
 	useEffect(() => {
@@ -45,6 +72,7 @@ function TodoListCard({ data }) {
 			});
 		};
 		getList();
+		console.log("yawa");
 	}, [id]);
 
 	return (
@@ -55,15 +83,25 @@ function TodoListCard({ data }) {
 				borderRadius: "25px",
 				minHeight: "12rem",
 				padding: "10px",
+				boxShadow: "3px 8px #fff",
 			}}
 		>
 			<div style={{ textAlign: "center" }}>
-				<h4 style={{ color: "#fff", fontFamily: "cursive", fontWeight: "bold" }}>
-					{date.format("dddd, MMMM Do YYYY").toString()}
+				<h4
+					style={{
+						color: "#fff",
+						fontFamily: "cursive",
+						fontWeight: "bold",
+						justifyContent: "space-between",
+					}}
+				>
+					{date.format("ddd, MMMM Do YYYY").toString()}
+					<Delete style={{ cursor: "pointer" }} onClick={onDeleteList} fontSize="large" />
 				</h4>
 				<AddTodo data={data} />
+				<h4>{progressPercentage()}</h4>
 				{todos.map((todo) => (
-					<h6 key={todo.id}>{todo.title}</h6>
+					<Todo key={todo.id} data={todo} />
 				))}
 			</div>
 		</Container>

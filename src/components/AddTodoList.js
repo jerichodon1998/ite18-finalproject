@@ -57,12 +57,13 @@ function AddTodoList() {
 		<Container
 			style={{
 				textAlign: "center",
-				backgroundColor: "#F1E6B8",
+				backgroundColor: "#fff",
 				width: "20rem",
 				height: "11rem",
 				borderRadius: "25px",
 				padding: ".75rem .5rem",
 				marginBottom: "1rem",
+				boxShadow: "3px 8px #606266",
 			}}
 		>
 			<h3 style={{ fontFamily: "cursive", color: "#000" }}>New List</h3>
