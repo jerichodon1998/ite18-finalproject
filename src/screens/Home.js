@@ -23,7 +23,12 @@ function Home() {
 			{currentUser.isLoggedin ? (
 				renderTodoList()
 			) : (
-				<h1 style={{ color: "#fff" }}>LOGIN SA, AYAW PAG-TINANGA</h1>
+				<div style={{ textAlign: "center" }}>
+					<h1 style={{ color: "#fff", fontFamily: "cursive" }}>
+						Welcome! Signup or Signin to make a{" "}
+						<span style={{ fontWeight: " bold", fontSize: "3rem" }}>LIST!</span>
+					</h1>
+				</div>
 			)}
 		</Container>
 	);

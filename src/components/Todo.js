@@ -3,6 +3,7 @@ import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Form, Card } from "react-bootstrap";
 import { db } from "../firebaseConfig";
+import EditTask from "./EditTask";
 
 function Todo({ data }) {
 	const { description, done, title, id } = data;
@@ -34,14 +35,16 @@ function Todo({ data }) {
 					>
 						{description}
 					</Card.Subtitle>
-					<div style={{ textAlign: "center" }}>
+					<div style={{ textAlign: "center", marginTop: ".5rem" }}>
+						<EditTask data={data} />
 						<Delete
 							fontSize="large"
+							style={{ marginBottom: "1rem", cursor: "pointer" }}
 							onClick={onDeleteTodo}
-							style={{ marginBottom: "1rem" }}
 						/>
 						<Form.Check
 							style={{ display: "inline", fontSize: "1.7rem" }}
+							defaultChecked={isDone}
 							value={isDone}
 							onChange={onDoneChange}
 							type="checkbox"

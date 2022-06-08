@@ -72,7 +72,6 @@ function TodoListCard({ data }) {
 			});
 		};
 		getList();
-		console.log("yawa");
 	}, [id]);
 
 	return (

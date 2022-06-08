@@ -18,7 +18,6 @@ function AddTodoList() {
 	};
 
 	const onAddList = () => {
-		console.log(date);
 		// ADD DOC
 		const todoList = new TodoListModel(date, [], currentUser.uid);
 
