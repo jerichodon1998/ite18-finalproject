@@ -1,5 +1,5 @@
 import { Google } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Container, Form, Modal, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -67,6 +67,10 @@ function SigninModal() {
 		e.preventDefault();
 		dispatch(loginWithEmailAndPassword(email, password));
 	};
+
+	useEffect(() => {
+		setError(currentUser.error?.errorMessage);
+	}, [setError, currentUser]);
 
 	return (
 		<>

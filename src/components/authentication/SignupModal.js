@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Container, Form, Modal, Spinner } from "react-bootstrap";
 import Google from "@mui/icons-material/Google";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ const buttonStyle = {
 
 function SignupModal() {
 	const currentUser = useSelector((state) => state.authReducers);
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(null);
 	const [email, setEmail] = useState("");
 	const [fname, setFname] = useState("");
 	const [lname, setLname] = useState("");
@@ -67,10 +67,12 @@ function SignupModal() {
 		dispatch(signupWithEmailAndPassword(email, password, fname, lname));
 		if (currentUser.error && currentUser.signupRequest !== false) {
 			setError(currentUser.error.errorMessage);
-		} else {
-			handleClose();
 		}
 	};
+
+	useEffect(() => {
+		setError(currentUser.error?.errorMessage);
+	}, [setError, currentUser]);
 
 	return (
 		<>
