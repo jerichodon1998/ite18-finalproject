@@ -15,21 +15,28 @@ const footerStyle = {
 };
 
 const iconStyle = { cursor: "pointer", margin: "0 .15rem" };
+const anchorStyle = { color: "#000" };
 
 function Footer() {
 	return (
 		<div style={footerStyle}>
 			<h4>Follow us on:</h4>
 			<div style={{ paddingBottom: ".15rem" }}>
-				<Facebook
+				<a
 					href="https://www.facebook.com/profile.php?id=100003689202977"
-					style={iconStyle}
-				/>
-				<Twitter
+					style={anchorStyle}
+				>
+					<Facebook style={iconStyle} />
+				</a>
+				<a
 					href="https://www.facebook.com/profile.php?id=100003689202977"
-					style={iconStyle}
-				/>
-				<Instagram href="https://www.instagram.com/dondon56800/" style={iconStyle} />
+					style={anchorStyle}
+				>
+					<Twitter style={iconStyle} />
+				</a>
+				<a href="https://www.instagram.com/dondon56800/" style={anchorStyle}>
+					<Instagram style={iconStyle} />
+				</a>
 			</div>
 			<h5>Copyright &copy; {moment().year()} by todoapp.</h5>
 		</div>
