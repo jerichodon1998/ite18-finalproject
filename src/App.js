@@ -4,15 +4,19 @@ import "antd/dist/antd.less";
 import Header from "./components/Header";
 import Home from "./screens/Home";
 import About from "./screens/About";
+import Footer from "./components/Footer";
 
 function App() {
 	return (
 		<Router>
-			<Header />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/about" element={<About />} />
-			</Routes>
+			<div style={{ paddingBottom: "7.5rem" }}>
+				<Header />
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/about" element={<About />} />
+				</Routes>
+			</div>
+			<Footer />
 		</Router>
 	);
 }

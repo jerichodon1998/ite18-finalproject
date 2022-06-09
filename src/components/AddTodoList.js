@@ -11,7 +11,7 @@ function AddTodoList() {
 	const currentUser = useSelector((state) => state.authReducers);
 	const dateFormat = "YYYY/MM/DD";
 	const currentDate = moment();
-	const [date, setDate] = useState(currentDate._d);
+	const [date, setDate] = useState(currentDate?._d);
 
 	const onDatepickerChange = (e) => {
 		setDate(e?._d);
@@ -20,13 +20,10 @@ function AddTodoList() {
 	const onAddList = () => {
 		// ADD DOC
 		const todoList = new TodoListModel(date, [], currentUser.uid);
-
 		addDoc(collection(db, "todo_list"), {
 			date: todoList.date,
-			todos: todoList.todos,
 			userId: currentUser.uid,
 		});
-		setDate(null);
 	};
 
 	const renderDatePicker = () => {

@@ -21,9 +21,8 @@ function MapList() {
 				const list = snapshot.docs.map((doc) => {
 					const id = doc.id;
 					const date = moment(doc.data().date?.toDate());
-					const todos = doc.data().todos;
 					const userId = doc.data().userId;
-					const list = new TodoListModel(date, todos, userId, id);
+					const list = new TodoListModel(date, userId, id);
 					return list;
 				});
 				setTodolist(list);
