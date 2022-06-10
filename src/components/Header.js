@@ -68,7 +68,7 @@ function Header() {
 					}}
 					onClick={() => navigate("/")}
 				>
-					TODO-LIST
+					TO-DO LIST
 				</Button>
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
