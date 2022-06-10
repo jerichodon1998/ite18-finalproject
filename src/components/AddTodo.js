@@ -20,13 +20,15 @@ function AddTodo({ data }) {
 	const onSubmitButton = (e) => {
 		e.preventDefault();
 		// ADD TODO
-		const newTodo = new TodoModel(title, description, false, serverTimestamp(), listId);
+		const newTodo = new TodoModel(title, description, false, serverTimestamp(), listId, "", "");
 		addDoc(collection(db, "todo"), {
 			title: newTodo.title,
 			description: newTodo.description,
 			done: newTodo.done,
 			timestamp: newTodo.timestamp,
 			listId: newTodo.listId,
+			fileName: newTodo.fileName,
+			fileUrl: newTodo.fileUrl,
 		});
 		setTitle("");
 		setDescription("");

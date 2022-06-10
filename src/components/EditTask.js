@@ -2,12 +2,14 @@ import React from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import Edit from "@mui/icons-material/Edit";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { db, storage } from "../firebaseConfig";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 function EditTask({ data }) {
-	const { title, description, id } = data;
+	const { title, description, id, fileUrl, fileName } = data;
 	const [show, setShow] = React.useState(false);
 
+	const [file, setFile] = React.useState(null);
 	const [newTitle, setNewtitle] = React.useState(title);
 	const [newDescription, setNewDescription] = React.useState(description);
 
@@ -16,6 +18,41 @@ function EditTask({ data }) {
 
 	const onUpdateTask = (e) => {
 		e.preventDefault();
+		if (file) {
+			const storageRef = ref(storage, `${file?.name}`);
+			const uploadTask = uploadBytesResumable(storageRef, file);
+			uploadTask.on(
+				"state_changed",
+				(snapshot) => {
+					// Observe state change events such as progress, pause, and resume
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					// const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					// console.log("Upload is " + progress + "% done");
+				},
+				(error) => {
+					// console.log(error);
+				},
+				() => {
+					// Handle successful uploads on complete
+					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+						if (fileUrl !== "" || fileName !== "") {
+							const deleteRef = ref(storage, fileName);
+							deleteObject(deleteRef)
+								.then(() => {})
+								.catch((err) => {});
+						}
+
+						const docRef = doc(db, "todo", id);
+						updateDoc(docRef, {
+							fileUrl: downloadURL,
+							fileName: file?.name,
+						});
+					});
+				}
+			);
+		}
+
 		if (title !== newTitle || description !== newDescription) {
 			const docRef = doc(db, "todo", id);
 			updateDoc(docRef, {
@@ -65,6 +102,13 @@ function EditTask({ data }) {
 								onChange={(e) => setNewDescription(e.target.value)}
 								placeholder="Enter Description"
 								required
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>File</Form.Label>
+							<Form.Control
+								type="file"
+								onChange={(e) => setFile(e.target?.files[0])}
 							/>
 						</Form.Group>
 					</Modal.Body>

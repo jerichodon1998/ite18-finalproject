@@ -1,12 +1,13 @@
 import { Delete } from "@mui/icons-material";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { Form, Card } from "react-bootstrap";
-import { db } from "../firebaseConfig";
+import { Form, Card, Button } from "react-bootstrap";
+import { db, storage } from "../firebaseConfig";
+import { deleteObject, ref } from "firebase/storage";
 import EditTask from "./EditTask";
 
 function Todo({ data }) {
-	const { description, done, title, id } = data;
+	const { description, done, title, id, fileUrl, fileName } = data;
 	const [isDone, setIsDone] = useState(done);
 	const onDoneChange = (e) => {
 		setIsDone(e.target.checked);
@@ -16,7 +17,12 @@ function Todo({ data }) {
 		});
 	};
 
-	const onDeleteTodo = () => {
+	const onDeleteTodo = (e) => {
+		e.preventDefault();
+		const deleteRef = ref(storage, fileName);
+		deleteObject(deleteRef)
+			.then(() => {})
+			.catch((err) => {});
 		deleteDoc(doc(db, "todo", id));
 	};
 
@@ -35,6 +41,11 @@ function Todo({ data }) {
 					>
 						{description}
 					</Card.Subtitle>
+					{fileName !== "" ? (
+						<a href={fileUrl} target="blank">
+							<Button variant="warning">{fileName}</Button>
+						</a>
+					) : null}
 					<div style={{ textAlign: "center", marginTop: ".5rem" }}>
 						<EditTask data={data} />
 						<Delete

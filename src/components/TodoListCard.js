@@ -2,12 +2,13 @@ import { collection, deleteDoc, doc, onSnapshot, orderBy, query, where } from "f
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
-import { db } from "../firebaseConfig";
-import { TodoModel } from "../models/TodoModel";
+import { db, storage } from "../firebaseConfig";
 import Delete from "@mui/icons-material/Delete";
 import AddTodo from "./AddTodo";
 import Todo from "./Todo";
 import { ProgressBar } from "react-bootstrap";
+import { TodoModel } from "../models/TodoModel";
+import { deleteObject, ref } from "firebase/storage";
 
 function TodoListCard({ data }) {
 	const { date, id } = data;
@@ -24,6 +25,12 @@ function TodoListCard({ data }) {
 	};
 	const onDeleteList = () => {
 		todos.forEach((todo) => {
+			if (todo.fileName !== "") {
+				const deleteRef = ref(storage, todo.fileName);
+				deleteObject(deleteRef)
+					.then(() => {})
+					.catch((err) => {});
+			}
 			deleteDoc(doc(db, "todo", todo.id));
 		});
 		deleteDoc(doc(db, "todo_list", id));
@@ -64,8 +71,19 @@ function TodoListCard({ data }) {
 					const description = doc.data().description;
 					const listId = doc.data().listId;
 					const done = doc.data().done;
+					const fileName = doc.data().fileName;
+					const fileUrl = doc.data().fileUrl;
 					const timestamp = doc.data().timestamp;
-					const task = new TodoModel(title, description, done, timestamp, listId, id);
+					const task = new TodoModel(
+						title,
+						description,
+						done,
+						timestamp,
+						listId,
+						fileUrl,
+						fileName,
+						id
+					);
 					return task;
 				});
 				setTodos(list);
