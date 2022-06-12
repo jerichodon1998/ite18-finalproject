@@ -1,21 +1,22 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: "AIzaSyBnj3OICs76WiGdsK_HEH3_dy5V5dxOYOE",
-	authDomain: "todolistapp-e1511.firebaseapp.com",
-	databaseURL: "https://todolistapp-e1511-default-rtdb.asia-southeast1.firebasedatabase.app",
-	projectId: "todolistapp-e1511",
-	storageBucket: "todolistapp-e1511.appspot.com",
-	messagingSenderId: "1019390814893",
-	appId: "1:1019390814893:web:b8b99abf037409edf07424",
-	measurementId: "G-4NHT8TW3J1",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DB_URL,
+  projectId: process.env.REACT_APP_API_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+  // ! you need to setup your local environment variables
 };
 
 // Initialize Firebase
