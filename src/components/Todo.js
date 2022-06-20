@@ -19,10 +19,12 @@ function Todo({ data }) {
 
 	const onDeleteTodo = (e) => {
 		e.preventDefault();
-		const deleteRef = ref(storage, fileName);
-		deleteObject(deleteRef)
-			.then(() => {})
-			.catch((err) => {});
+		if (fileName !== "" || fileUrl !== "") {
+			const deleteRef = ref(storage, fileName);
+			deleteObject(deleteRef)
+				.then(() => {})
+				.catch((err) => {});
+		}
 		deleteDoc(doc(db, "todo", id));
 	};
 
