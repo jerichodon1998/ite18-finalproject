@@ -1,5 +1,6 @@
 import React from "react";
 import Facebook from "@mui/icons-material/Facebook";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import moment from "moment";
 import { Instagram, Twitter } from "@mui/icons-material";
 
@@ -22,20 +23,20 @@ function Footer() {
 		<div style={footerStyle}>
 			<h4>Follow us on:</h4>
 			<div style={{ paddingBottom: ".15rem" }}>
-				<a
-					href="https://www.facebook.com/profile.php?id=100003689202977"
-					style={anchorStyle}
-				>
+				<a href="https://www.facebook.com/markjericho.manilag.35" style={anchorStyle}>
 					<Facebook style={iconStyle} />
 				</a>
-				<a
-					href="https://www.facebook.com/profile.php?id=100003689202977"
-					style={anchorStyle}
-				>
+				<a href="https://twitter.com/jerichodon1998" style={anchorStyle}>
 					<Twitter style={iconStyle} />
 				</a>
 				<a href="https://www.instagram.com/dondon56800/" style={anchorStyle}>
 					<Instagram style={iconStyle} />
+				</a>
+				<a
+					href="https://www.linkedin.com/in/mark-jericho-manilag-089706206/"
+					style={anchorStyle}
+				>
+					<LinkedInIcon style={iconStyle} />
 				</a>
 			</div>
 			<h5>Copyright &copy; {moment().year()} by todoapp.</h5>
