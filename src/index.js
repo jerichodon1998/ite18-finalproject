@@ -8,7 +8,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./redux";
 
 let composeEnhancers;
-if (process.env.NODE_ENV !== "production") {
+if (process.env.REACT_APP_NODE_ENV !== "production") {
 	composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 }
 const store = createStore(
